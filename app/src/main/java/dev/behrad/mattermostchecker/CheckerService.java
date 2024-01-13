@@ -26,7 +26,6 @@ import okhttp3.Response;
 public class CheckerService extends Service {
 
     Thread workerThread;
-    PowerManager.WakeLock wakeLock;
 
     public CheckerService() {
     }
@@ -42,6 +41,7 @@ public class CheckerService extends Service {
 
         String userToken = intent.getExtras().get("token").toString();
         String baseUrl = intent.getExtras().get("base_url").toString();
+        int interval = intent.getIntExtra("interval", 10);
 
         workerThread = new Thread(() -> {
             while (true) {
@@ -51,7 +51,7 @@ public class CheckerService extends Service {
                     if(t) {
                         ring();
                     }
-                    Thread.sleep(10000);
+                    Thread.sleep(interval * 1000L);
                 } catch (InterruptedException e) {
                     break;
                 } catch (IOException | JSONException e) {
@@ -68,7 +68,6 @@ public class CheckerService extends Service {
     public void onDestroy() {
         super.onDestroy();
         workerThread.interrupt();
-        wakeLock.release();
         Toast.makeText(this, "Stopped", Toast.LENGTH_SHORT).show();
     }
 

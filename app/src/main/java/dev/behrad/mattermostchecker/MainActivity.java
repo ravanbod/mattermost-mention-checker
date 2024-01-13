@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     boolean onDuty = false;
     Intent svcIntent;
 
-    EditText baseUrlET, loginIdET, passwordET;
+    EditText baseUrlET, loginIdET, passwordET, intervalET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         baseUrlET = findViewById(R.id.mattermost_base_url);
         loginIdET = findViewById(R.id.mattermost_login_id);
         passwordET = findViewById(R.id.mattermost_password);
+        intervalET = findViewById(R.id.interval);
 
         baseUrlET.setText(prefs.getString("base_url", ""));
         loginIdET.setText(prefs.getString("login_id", ""));
         passwordET.setText(prefs.getString("password", ""));
+        intervalET.setText(prefs.getString("interval", "10"));
 
         svcIntent = new Intent(MainActivity.this, CheckerService.class);
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                                     dialog.cancel();
                                     Toast.makeText(MainActivity.this, "FAILED to start", Toast.LENGTH_SHORT).show();
-
                                 }
 
                                 @Override
@@ -79,11 +80,20 @@ public class MainActivity extends AppCompatActivity {
                                             baseUrlET.setEnabled(!baseUrlET.isEnabled());
                                             loginIdET.setEnabled(!loginIdET.isEnabled());
                                             passwordET.setEnabled(!passwordET.isEnabled());
+                                            intervalET.setEnabled(!intervalET.isEnabled());
                                             prefs.edit().putString("base_url", baseUrlET.getText().toString()).apply();
                                             prefs.edit().putString("login_id", loginIdET.getText().toString()).apply();
                                             prefs.edit().putString("password", passwordET.getText().toString()).apply();
+
+                                            int interval = 10;
+                                            if(isInteger(intervalET.getText().toString())) {
+                                                prefs.edit().putString("interval", intervalET.getText().toString()).apply();
+                                                interval = Integer.parseInt(intervalET.getText().toString());
+                                            }
+
                                             svcIntent.putExtra("token", response.header("token"));
                                             svcIntent.putExtra("base_url", baseUrlET.getText().toString());
+                                            svcIntent.putExtra("interval", interval);
                                             startService(svcIntent);
                                             Toast.makeText(MainActivity.this, "STARTED", Toast.LENGTH_SHORT).show();
                                         }
@@ -103,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 baseUrlET.setEnabled(!baseUrlET.isEnabled());
                 loginIdET.setEnabled(!loginIdET.isEnabled());
                 passwordET.setEnabled(!passwordET.isEnabled());
-
+                intervalET.setEnabled(!intervalET.isEnabled());
             }
         });
     }
@@ -117,5 +127,15 @@ public class MainActivity extends AppCompatActivity {
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(callback);
+    }
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException | NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }
