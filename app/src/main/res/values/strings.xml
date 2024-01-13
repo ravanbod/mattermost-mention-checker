@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MattermostChecker</string>
+    <string name="button_svc_disabled">Login and Run</string>
+    <string name="button_svc_enabled">STOP</string>
 </resources>
