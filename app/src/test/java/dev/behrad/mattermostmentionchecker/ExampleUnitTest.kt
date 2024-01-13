@@ -1,4 +1,4 @@
-package dev.behrad.mattermostchecker
+package dev.behrad.mattermostmentionchecker
 
 import org.junit.Test
 

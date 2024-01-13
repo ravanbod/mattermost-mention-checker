@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'dev.behrad.mattermostchecker'
+    namespace 'dev.behrad.mattermostmentionchecker'
     compileSdk 34
 
     defaultConfig {
-        applicationId "dev.behrad.mattermostchecker"
+        applicationId "dev.behrad.mattermostmentionchecker"
         minSdk 26
         targetSdk 34
         versionCode 1

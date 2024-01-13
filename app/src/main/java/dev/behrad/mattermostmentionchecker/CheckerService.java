@@ -1,15 +1,11 @@
-package dev.behrad.mattermostchecker;
+package dev.behrad.mattermostmentionchecker;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,7 +17,6 @@ import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class CheckerService extends Service {
 

@@ -1,4 +1,4 @@
-package dev.behrad.mattermostchecker.ui.theme
+package dev.behrad.mattermostmentionchecker.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
