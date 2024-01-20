@@ -1,7 +1,7 @@
 # Mattermost Mention Checker
 
 ## What is it?
-This project is written for notifying you (with notification ringtone) when you receive a message on Mattermost! (in a while loop! Because mattermost application does not notify me well)
+This project is written to notify you (with notification ringtone) when you receive a message on Mattermost! (in a while loop! Because mattermost application does not notify me well)
 
 ## What is mattermost?
 Search "Mattermost" in the internet!
